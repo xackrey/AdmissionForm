@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - LYFJRSHS</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#6a11cb,#2575fc);
+  color: #fff;
+  margin:0;
+  padding:20px;
+}
+
+h2 {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.search-bar {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.search-bar input {
+  width: 300px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  font-size:16px;
+}
+
+.card-container {
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius:12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  padding:20px;
+  width:300px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.card h3 {
+  margin-top:0;
+  margin-bottom:10px;
+  font-size:18px;
+}
+
+.card p { margin:5px 0; font-size:14px; }
+
+.status {
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:20px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.pending { background:#fbbf24; color:#92400e; }
+.approved { background:#16a34a; color:#fff; }
+.rejected { background:#dc2626; color:#fff; }
+
+.card button {
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-right:5px;
+  transition:0.3s;
+}
+
+.card .approve { background:#16a34a; color:#fff; }
+.card .approve:hover { background:#138a35; }
+.card .reject { background:#dc2626; color:#fff; }
+.card .reject:hover { background:#b91c1c; }
+</style>
+</head>
+<body>
+
+<h2>Admin Panel - Manage Appeals</h2>
+
+<div class="search-bar">
+  <input type="text" id="search" placeholder="Search by Name or LRN...">
+</div>
+
+<div class="card-container" id="card-container">
+  <!-- Appeal cards will appear here -->
+</div>
+
+<script>
+// Load appeals from localStorage
+let appeals = JSON.parse(localStorage.getItem('appeals')) || [];
+const container = document.getElementById('card-container');
+const searchInput = document.getElementById('search');
+
+// Render cards
+function renderCards(list) {
+  container.innerHTML = '';
+  if(list.length === 0){
+    container.innerHTML = '<p style="text-align:center;">No appeals found.</p>';
+    return;
+  }
+  list.forEach((appeal,index)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>${appeal.studentId}</h3>
+      <p><strong>Appeal:</strong> ${appeal.text}</p>
+      <p><strong>Date:</strong> ${appeal.date}</p>
+      <span class="status ${appeal.status.toLowerCase()}">${appeal.status}</span>
+      <div style="margin-top:10px;">
+        <button class="approve">Approve</button>
+        <button class="reject">Reject</button>
+      </div>
+    `;
+    // Buttons
+    card.querySelector('.approve').addEventListener('click', ()=>{
+      appeals[index].status = 'Approved';
+      localStorage.setItem('appeals', JSON.stringify(appeals));
+      renderCards(appeals);
+    });
+    card.querySelector('.reject').addEventListener('click', ()=>{
+      appeals[index].status = 'Rejected';
+      localStorage.setItem('appeals', JSON.stringify(appeals));
+      renderCards(appeals);
+    });
+    container.appendChild(card);
+  });
+}
+
+// Initial render
+renderCards(appeals);
+
+// Search functionality
+searchInput.addEventListener('input', ()=>{
+  const query = searchInput.value.toLowerCase();
+  const filtered = appeals.filter(a=> a.studentId.toLowerCase().includes(query) || a.text.toLowerCase().includes(query));
+  renderCards(filtered);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYFJRSHS Admission Portal</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  margin: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.sidebar .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .logo img { width: 60px; border-radius: 50%; margin-bottom: 10px; }
+
+.sidebar ul { padding: 0; }
+.sidebar li { list-style: none; margin: 15px 0; }
+.sidebar li a { text-decoration: none; color: #ecf0f1; font-weight: bold; cursor: pointer; }
+.sidebar li.active a, .sidebar li a:hover { color: #3498db; }
+.main-content { flex:1; padding: 30px; overflow-y:auto; background-color: rgba(255,255,255,0.05); }
+header { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+header .logo { width: 60px; border-radius: 50%; }
+.content-section { display: none; background-color: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+.content-section.active { display: block; }
+.content-section h2, .content-section h3 { margin-bottom: 15px; }
+.content-section input, .content-section select, .content-section textarea, .content-section button { margin: 8px 0; padding: 10px; border-radius: 6px; border: none; }
+.content-section button { background-color: #3498db; color: #fff; cursor: pointer; font-weight: bold; transition: 0.3s; }
+.content-section button:hover { background-color: #2980b9; }
+#photo-preview img { width: 100px; margin-top: 10px; border-radius: 6px; border: 2px solid #fff; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">
+    <img src="logo.jpg" alt="School Logo">
+    <h2>LYFJRSHS</h2>
+  </div>
+  <ul class="menu">
+    <li class="active" data-target="application-details"><a href="ApplicantDetails.html">Application Details</a></li>
+    <li data-target="applicant-profile"><a href="ApplicationProfile.html">Applicant Profile</a></li>
+    <li data-target="uploaded-requirements"><a href="UploadedReuirements.html">Uploaded Requirements</a></li>
+    <li data-target="application-assessment"><a href="ApplicationAssessment.html">Application Assessment</a></li>
+    <li id="logout"><a href="#">Logout</a></li>
+  </ul>
+</aside>
+
+<!-- Main content -->
+<main class="main--content">
+  <div class="header--wrapper">
+    <div class="header--title">
+      <img src="logo.jpg" alt="School Logo" class="header-logo">
+      <h2>Admission Form </h2>
+    </div>
+  </div>
+
+  <!-- Application Details Form -->
+  <section id="application-details" class="content-section active">
+    <h3>Application Details</h3>
+    <form id="application-details-form"><p>Applicant Type</p>
+      <select id="applicant-type" required>
+        <option value="">Select Applicant Type</option>
+        <option value="New">Currently Enrolled Grade 10 Student</option>
+        <option value="Transferee">Transferee</option>
+      </select>
+<br>
+<label>Track</label><br>
+<select id="track" required>
+  <option value="">Select Track</option>
+  <option value="STEM">STEM</option>
+  <option value="TVL">TVL</option>
+  <option value="HUMSS">HUMSS</option>
+  <option value="ABM">ABM</option>
+</select>
+
+<div id="strand-container" style="display:none;">
+  <label>Strand</label>
+  <select id="strand">
+    <!-- options will be added dynamically -->
+  </select>
+</div>
+
+<br>
+<p>LRN</p>
+      <input type="text" placeholder="LRN (12-digit)" id="lrn" pattern="[0-9]{12}" maxlength="12" ><br>
+      <p>Email Address</p>
+      <input type="email" placeholder="Email Address" id="email" required>
+
+      <!-- Exam Schedule only for STEM -->
+      <div id="exam-schedule">
+        <label for="exam-date">STEM Exam Schedule</label>
+        <input type="date" id="exam-date">
+        <input type="time" id="exam-time">
+      </div>
+
+      <button type="submit">Save Details</button>
+    </form>
+
+    
+  </section>
+
+
+
+  <h4 style="color:#fff; margin-top:20px;">School Location</h4>
+
+<div style="
+  width:100%;
+  max-width:400px;
+  height:180px;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  margin-top:10px;
+">
+  <iframe
+    width="100%"
+    height="100%"
+    style="border:0"
+    loading="lazy"
+    allowfullscreen
+    src="https://www.google.com/maps?q=LYFJRSHS%20Senior%20High%20School%20Philippines&output=embed">
+  </iframe>
+  <p>
+  📍 <a href="https://maps.google.com/?q=LYFJRSHS+Senior+High+School+Philippines"
+     target="_blank"
+     style="color:#1a73e8; font-weight:bold;">
+     View School Location on Google Maps
+  </a>
+</p>
+
+</div>
+<table id="details-table">
+  <thead>
+    <tr><th>Field</th><th>Value</th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+</main>
+
+
+
+
+
+<script>
+// Sidebar Navigation
+const menuItems = document.querySelectorAll('.menu li[data-target]');
+const sections = document.querySelectorAll('.content-section');
+menuItems.forEach(item=>{
+  item.addEventListener('click', ()=>{
+    menuItems.forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+    const target = item.getAttribute('data-target');
+    sections.forEach(section=>{
+      section.classList.toggle('active', section.id === target);
+    });
+  });
+});
+
+// Logout
+document.getElementById('logout').addEventListener('click', ()=>{
+  alert("You have been logged out!");
+  window.location.href = 'index.html';
+});
+
+// Show Exam Schedule if STEM
+const trackSelect = document.getElementById('track');
+trackSelect.addEventListener('change', ()=>{
+  const examDiv = document.getElementById('exam-schedule');
+  if(trackSelect.value === 'STEM'){
+    examDiv.style.display = 'block';
+  }else{
+    examDiv.style.display = 'none';
+  }
+});
+
+// Save form data to table
+document.getElementById('application-details-form').addEventListener('submit', e=>{
+  e.preventDefault();
+  const table = document.getElementById('details-table');
+  table.innerHTML = `
+    <tr><td>Applicant Type</td><td>${document.getElementById('applicant-type').value}</td></tr>
+    <tr><td>Track</td><td>${trackSelect.value}</td></tr>
+    <tr><td>Strand</td><td>${document.getElementById('strand').value}</td></tr>
+    <tr><td>LRN</td><td>${document.getElementById('lrn').value}</td></tr>
+    <tr><td>Email</td><td>${document.getElementById('email').value}</td></tr>
+    ${trackSelect.value==='STEM' ? `<tr><td>Exam Date & Time</td><td>${document.getElementById('exam-date').value} ${document.getElementById('exam-time').value}</td></tr>` : ''}
+  `;
+  alert("Details saved successfully!");
+});
+
+
+</script>
+
+</body>
+</html>

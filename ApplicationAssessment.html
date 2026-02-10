@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYFJRSHS Admission Portal</title>
+
+<style>
+/* General Body + Sidebar */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  margin: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #2c3e50;
+  padding: 20px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .logo img { width: 60px; border-radius: 50%; margin-bottom: 10px; }
+
+.sidebar ul { padding: 0; }
+.sidebar li { list-style: none; margin: 15px 0; }
+.sidebar li a { text-decoration: none; color: #ecf0f1; font-weight: bold; cursor: pointer; }
+.sidebar li.active a, .sidebar li a:hover { color: #3498db; }
+
+.main-content {
+  flex:1;
+  padding: 30px;
+  overflow-y:auto;
+  background-color: rgba(255,255,255,0.05);
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+header .logo { width: 60px; border-radius: 50%; }
+
+/* Cards */
+.card{
+  background:#fff;
+  color: #1e3a8a;
+  padding:25px 30px;
+  margin-bottom:25px;
+  border-radius:12px;
+  box-shadow:0 15px 30px rgba(0,0,255,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 20px 40px rgba(0,0,255,0.15);
+}
+
+h2, h3{ margin-bottom:15px; }
+
+.info{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:12px;
+}
+
+.info div{
+  background:#f0f9ff;
+  padding:12px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:500;
+  min-height:40px;
+}
+
+/* Status Badge */
+.status{
+  font-weight:600;
+  padding:8px 14px;
+  border-radius:20px;
+  display:inline-block;
+  font-size:14px;
+}
+
+.pending{ background:#fef3c7; color:#92400e; }
+.approved{ background:#dcfce7; color:#166534; }
+.rejected{ background:#fee2e2; color:#b91c1c; }
+
+/* Buttons */
+button{
+  padding:12px 22px;
+  background:#3498db;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:14px;
+  transition: background 0.2s ease;
+  margin-top:10px;
+}
+
+button:hover:not(:disabled){ background:#1e40af; }
+button:disabled{ background:#94a3b8; cursor:not-allowed; }
+
+.card p{ font-size:14px; margin-top:5px; }
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar Menu -->
+<nav class="sidebar">
+  <div class="logo">
+    <img src="logo.jpg" alt="School Logo">
+    <h2>LYFJRSHS</h2>
+  </div>
+  <ul>
+    <li data-target="application-details" ><a href="ApplicantDetails.html">Application Details</a></li>
+    <li data-target="applicant-profile"><a href="ApplicationProfile.html">Applicant Profile</a></li>
+    <li data-target="uploaded-requirements"><a href="UploadedReuirements.html">Uploaded Requirements</a></li>
+    <li data-target="application-assessment" class="active"><a href="#">Application Assessment</a></li>
+    <li id="logout"><a href="#">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+  <header>
+    <img src="logo.jpg" alt="School Logo" class="logo">
+    <h1>Admission Form</h1>
+  </header>
+
+  <!-- APPLICATION DETAILS -->
+  <div class="card">
+    <h2>Application Details</h2>
+    <div class="info">
+      <div><strong>Applicant Type:</strong> —</div>
+      <div><strong>Track:</strong> —</div>
+      <div><strong>Strand:</strong> —</div>
+      <div><strong>LRN:</strong> —</div>
+      <div><strong>Email:</strong> —</div>
+    </div>
+  </div>
+
+  <!-- APPLICANT PROFILE -->
+  <div class="card">
+    <h2>Applicant Profile</h2>
+    <div class="info">
+      <div><strong>Name:</strong> —</div>
+      <div><strong>Date of Birth:</strong> —</div>
+      <div><strong>Address:</strong> —</div>
+      <div><strong>Previous School:</strong> —</div>
+    </div>
+  </div>
+
+  <!-- VALIDATION STATUS -->
+  <div class="card">
+    <h2>Validation Status</h2>
+    <span class="status pending">Pending Validation</span>
+  </div>
+
+  <!-- ADMIN REVIEW -->
+  <div class="card">
+    <h2>Admin Review</h2>
+    <div class="info">
+      <div><strong>Assessed By:</strong> —</div>
+      <div><strong>Assessment Date:</strong> —</div>
+      <div><strong>Remarks:</strong> Waiting for validation.</div>
+    </div>
+  </div>
+
+  <!-- APPEAL -->
+  <div class="card">
+    <h3>Appeal</h3>
+    <p>You can submit an appeal once your application is approved.</p>
+    <button disabled>Submit Appeal</button>
+  </div>
+</div>
+
+</body>
+</html>

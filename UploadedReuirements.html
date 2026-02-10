@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYFJRSHS Admission Portal</title>
+
+<style>
+/* Sidebar + Layout */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  margin: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #2c3e50;
+  padding: 20px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .logo img { width: 60px; border-radius: 50%; margin-bottom: 10px; }
+.sidebar ul { padding: 0; }
+.sidebar li { list-style: none; margin: 15px 0; }
+.sidebar li a { text-decoration: none; color: #ecf0f1; font-weight: bold; cursor: pointer; }
+.sidebar li.active a, .sidebar li a:hover { color: #3498db; }
+
+.main-content {
+  flex:1;
+  padding: 30px;
+  overflow-y:auto;
+  background-color: rgba(255,255,255,0.05);
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+header .logo { width: 60px; border-radius: 50%; }
+
+/* Upload Cards */
+.card{
+  background: rgba(255,255,255,0.1);
+  padding: 25px 30px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0,0,255,0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,255,0.15);
+}
+
+.card h2{
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #f0f9ff;
+}
+
+input[type="file"]{
+  display: block;
+  margin: 10px auto;
+  padding: 5px;
+  border-radius: 6px;
+  background: #fff;
+  color: #000;
+}
+
+#photo-preview img {
+  width: 120px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 2px solid #fff;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px 25px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+button:hover { background: #1e40af; }
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar Menu -->
+<nav class="sidebar">
+  <div class="logo">
+    <img src="logo.jpg" alt="School Logo">
+    <h2>LYFJRSHS</h2>
+  </div>
+  <ul>
+    <li data-target="application-details"><a href="ApplicantDetails.html">Application Details</a></li>
+    <li data-target="applicant-profile"><a href="ApplicationProfile.html">Applicant Profile</a></li>
+    <li data-target="uploaded-requirements" class="active"><a href="UploadedReuirements.html">Uploaded Requirements</a></li>
+    <li data-target="application-assessment"><a href="ApplicationAssessment.html">Application Assessment</a></li>
+    <li id="logout"><a href="#">Logout</a></li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+  <header>
+    <img src="logo.jpg" alt="School Logo" class="logo">
+    <h1>Uploaded Requirements</h1>
+  </header>
+
+  <!-- Upload Cards -->
+  <div class="card">
+    <h2>Accomplished Grade 10 Report Card</h2>
+    <input type="file" id="report-card" accept="image/*">
+    <div id="photo-preview-report"></div>
+  </div>
+
+  <div class="card">
+    <h2>Certification of Grade 10 Enrollment with Moral</h2>
+    <input type="file" id="cert-enrollment" accept="image/*">
+    <div id="photo-preview-cert"></div>
+  </div>
+
+  <div class="card">
+    <button id="submit-application">Submit Application</button>
+  </div>
+</div>
+
+<script>
+// Preview uploaded images
+function previewImage(inputId, previewDivId){
+  const input = document.getElementById(inputId);
+  const previewDiv = document.getElementById(previewDivId);
+  input.addEventListener('change', () => {
+    previewDiv.innerHTML = "";
+    const file = input.files[0];
+    if(file){
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      previewDiv.appendChild(img);
+    }
+  });
+}
+
+previewImage('report-card', 'photo-preview-report');
+previewImage('cert-enrollment', 'photo-preview-cert');
+
+// Submit button redirects to assessment page
+document.getElementById('submit-application').addEventListener('click', () => {
+  alert("Uploaded requirements saved!");
+  window.location.href = 'ApplicationAssessment.html';
+});
+</script>
+
+</body>
+</html>
