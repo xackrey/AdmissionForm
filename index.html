@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LYFJRSHS Admission Portal</title>
 
-<!-- Google Login -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-
 <!-- Stylesheet -->
 <link rel="stylesheet" href="style.css">
 <style>
@@ -60,30 +57,37 @@
     font-size: 16px;
   }
 
-  /* Google Button Wrapper */
-  .google-btn {
-    margin-top: 20px;
+  /* Form Fields */
+  .login-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
   }
 
-  /* Hidden Section After Login */
-  #after-login {
-    margin-top: 20px;
-    display: none;
-  }
-
-  #after-login button {
-    padding: 10px 20px;
+  .login-container button {
+    padding: 12px 20px;
     border: none;
     border-radius: 10px;
     background-color: #3498db;
     color: #fff;
     cursor: pointer;
     font-weight: bold;
+    width: 100%;
     transition: 0.3s;
+    margin-top: 10px;
   }
 
-  #after-login button:hover {
+  .login-container button:hover {
     background-color: #2980b9;
+  }
+
+  /* Hidden Section After Login */
+  #after-login {
+    margin-top: 20px;
+    display: none;
   }
 </style>
 </head>
@@ -92,17 +96,16 @@
 <div class="login-container">
   <img src="logo.jpg" class="logo" alt="School Logo">
   <h1><b>LYFJRSHS Admission Portal</b></h1>
-  <p>Login using your Gmail account</p>
+  <p>Login using your Gmail account and password</p>
 
-  <!-- Google Login -->
-  <div id="g_id_onload"
-     data-client_id="113380731276-thphd4f39c218f40b6e47lk09ndomd35.apps.googleusercontent.com"
-     data-callback="handleLogin">
-</div>
+  <!-- Login Form -->
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Enter your Gmail" required>
+    <input type="password" id="password" placeholder="Enter your password" required>
+    <button type="submit">Login</button>
+  </form>
 
-  <div class="g_id_signin google-btn"></div>
-
-  <!-- Hidden Form After Login -->
+  <!-- Hidden Section After Login -->
   <div id="after-login">
     <p>Login successful! Proceed to application.</p>
     <button onclick="goToApplicantDetails()">Go to Application</button>
@@ -110,22 +113,29 @@
 </div>
 
 <script>
-  function handleLogin(response) {
-    console.log("Google login success", response);
-    // Hide login button
-    document.querySelector('.g_id_signin').style.display = 'none';
-    // Show after-login section
-    document.getElementById('after-login').style.display = 'block';
-  }
+  // Example: Simple front-end login check
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Replace this with your real authentication logic
+    if(email === "example@gmail.com" && password === "password123") {
+      // Hide login form
+      loginForm.style.display = "none";
+      // Show after-login section
+      document.getElementById('after-login').style.display = "block";
+    } else {
+      alert("Invalid email or password!");
+    }
+  });
 
   function goToApplicantDetails() {
-    // Redirect to your main application page
     window.location.href = "ApplicantDetails.html";
   }
 </script>
 </body>
 </html>
-
-
-
-
